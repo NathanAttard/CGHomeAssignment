@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "260288140491",
+    "firebase_url": "https://cghomeassignment-bc76b-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "cghomeassignment-bc76b",
+    "storage_bucket": "cghomeassignment-bc76b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:260288140491:android:9627ec814b4df7b0b9374e",
+        "android_client_info": {
+          "package_name": "com.cghomeassignment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "260288140491-djfvjckd566l7l66q1fktgqonso15elf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsyVt2EVtFxMBvcqihix5v2aFNRn-bBrc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "260288140491-djfvjckd566l7l66q1fktgqonso15elf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
