@@ -1945,7 +1945,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: {fileID: 0}
   gameCode: {fileID: 382085457}
+  enterGameCode: {fileID: 0}
   p1Name: {fileID: 329294026}
+  p2Name: {fileID: 581014235}
 --- !u!4 &1431746908
 Transform:
   m_ObjectHideFlags: 0

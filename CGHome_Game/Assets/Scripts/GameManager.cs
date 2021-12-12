@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_InputField gameCode;
     [SerializeField] private TMP_InputField enterGameCode;
     [SerializeField] private TMP_Text p1Name;
+    [SerializeField] private TMP_Text p2Name;
 
     private void Awake()
     {
@@ -17,6 +18,11 @@ public class GameManager : MonoBehaviour
         {
             gameCode.text = FirebaseController.key;
             p1Name.text = FirebaseController.player1.Name;
+            
+            if (FirebaseController.player2.Name != "")
+            {
+                p2Name.text = FirebaseController.player2.Name;
+            } 
         }
     }
 
@@ -51,6 +57,9 @@ public class GameManager : MonoBehaviour
     {
         if (playerName.text !=  "")
         {
+            // Store player 2's name
+            FirebaseController.player2.Name = playerName.text;
+
             // Redirect user to Join scene
             LoadScene("Join");
         }
@@ -59,7 +68,16 @@ public class GameManager : MonoBehaviour
     // When the second player inputs the code for the game and validates the code, the user will be redirected to the Lobby scene
     public void JoinGame()
     {
-        // Validates the key and if key is correct, user added to lobby
-        StartCoroutine(FirebaseController.CheckKey(enterGameCode.text));
+        if (enterGameCode.text != "")
+        {
+            // Validates the key and if key is correct
+            StartCoroutine(FirebaseController.CheckKey(enterGameCode.text));
+
+            // If the key is valid, save data to firebase and redirect user to Lobby
+            if (FirebaseController.isKeyCorrect == true)
+            {
+                StartCoroutine(FirebaseController.AddSecPlayerToFB());
+            }
+        }
     }
 }
