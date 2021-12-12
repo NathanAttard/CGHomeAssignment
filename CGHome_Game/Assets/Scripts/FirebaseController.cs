@@ -9,6 +9,8 @@ public class FirebaseController : MonoBehaviour
     public static Player player1;
     public static Player player2;
 
+    public bool isKeyCorrect;
+
     private static DatabaseReference databaseRef;
 
     // Start is called before the first frame update
@@ -43,7 +45,28 @@ public class FirebaseController : MonoBehaviour
 
         Debug.Log("Data was successfully added to Firebase");
 
-        // Redirect user to the 'Lobby' scene
+        // Redirect user to the Lobby scene
         GameManager.LoadScene("Lobby");
+    }
+
+    public static IEnumerator CheckKey(string key)
+    {
+        yield return databaseRef.Child("Objects").Child(key).GetValueAsync().ContinueWith(task =>
+        {
+            if (task.IsCompleted)
+            {
+                DataSnapshot snapshot = task.Result;
+                Debug.Log(snapshot.Value);
+
+                if (snapshot.Value != null)
+                {
+                    Debug.Log("Correct Key");
+                }
+                else
+                {
+                    Debug.Log("Incorrect Key");
+                }
+            }
+        });
     }
 }
