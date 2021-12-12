@@ -8,4 +8,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Welcome.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Game.unity
+    guid: 1cf04db88e8b92e43a3fa5aac0f181e4
+  - enabled: 1
+    path: Assets/Scenes/Join.unity
+    guid: 568cdbc966138754d8ad294eb4c454f8
+  - enabled: 1
+    path: Assets/Scenes/Lobby.unity
+    guid: 610e377791549954b95b1084b942e0a2
+  - enabled: 1
+    path: Assets/Scenes/Winner.unity
+    guid: 661fff3abc853984d9bf34853cd8dff6
   m_configObjects: {}
