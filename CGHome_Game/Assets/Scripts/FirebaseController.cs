@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Firebase.Database;
+using System;
 
 public class FirebaseController : MonoBehaviour
 {
@@ -84,4 +85,69 @@ public class FirebaseController : MonoBehaviour
 
         GameManager.LoadScene("Lobby");
     }
+
+    //// Call this method before UpdatePlayerDetails to check which player needs to be updated
+    //public static void CheckPlayerToUpdate(GameObject player)
+    //{
+    //    switch (player.name)
+    //    {
+    //        case "Player 1":
+    //        // UpdatePlayerDetails(player, player1)
+    //        case "Player 2":
+    //        // UpdatePlayerDetails(player, player1)
+    //        default:
+    //            break;
+
+    //    }
+    //}
+
+    public static IEnumerator UpdatePlayerDetails(GameObject player)
+    {
+        if (player.name == "Player 1")
+        {
+            // Update player's details
+            player1.CreatedDate = DateTime.Now.ToString();
+            player1.Position = player.transform.position;
+
+            string shapeName = player.GetComponent<SpriteRenderer>().sprite.name;
+            player1.Shape = shapeName.Remove(shapeName.Length - 4);
+
+            // Convert to Json
+            string p1Json = JsonUtility.ToJson(player1);
+
+            // Upload the data to the database
+            yield return databaseRef.Child("Objects").Child(key).Child("Player 1").SetRawJsonValueAsync(p1Json);
+        }
+        else
+        {
+            // Update player's details
+            player2.CreatedDate = DateTime.Now.ToString();
+            player2.Position = player.transform.position;
+
+            string shapeName = player.GetComponent<SpriteRenderer>().sprite.name;
+            player2.Shape = shapeName.Remove(shapeName.Length - 4);
+
+            // Convert to Json
+            string p2Json = JsonUtility.ToJson(player2);
+
+            // Upload the data to the database
+            yield return databaseRef.Child("Objects").Child(key).Child("Player 2").SetRawJsonValueAsync(p2Json);
+        }
+    }
+
+    //public static IEnumerator UpdatePlayerDetails(GameObject playerGObj, Player player)
+    //{
+    //    // Update player's details
+    //    player.CreatedDate = DateTime.Now.ToString();
+    //    player.Position = playerGObj.transform.position;
+
+    //    string shapeName = playerGObj.GetComponent<SpriteRenderer>().sprite.name;
+    //    player.Shape = shapeName.Remove(shapeName.Length - 4);
+
+    //    // Convert to Json
+    //    string pJson = JsonUtility.ToJson(player);
+
+    //    // Upload the data to the database
+    //    yield return databaseRef.Child("Objects").Child(key).Child(playerGObj.name).SetRawJsonValueAsync(pJson);
+    //}
 }

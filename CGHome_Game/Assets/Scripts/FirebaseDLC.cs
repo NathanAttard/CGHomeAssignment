@@ -56,10 +56,11 @@ public class FirebaseDLC : MonoBehaviour
                 texture.LoadImage(fileContent);
 
                 // Create the sprite
-                Sprite circle = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
+                Sprite newSprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
+                newSprite.name = image.Name;
 
                 // Attach sprite to gameobjet
-                CreatePlayer(circle);
+                CreatePlayer(newSprite);
             }
         });
     }
@@ -82,5 +83,8 @@ public class FirebaseDLC : MonoBehaviour
 
         // Update fields in components
         player.GetComponent<SpriteRenderer>().sprite = sprite;
+
+        // Update details in Firebase
+        StartCoroutine(FirebaseController.UpdatePlayerDetails(player));
     }
 }
