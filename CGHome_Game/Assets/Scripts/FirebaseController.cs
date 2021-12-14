@@ -103,6 +103,22 @@ public class FirebaseController : MonoBehaviour
 
         Debug.Log("Details Updated");
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(2f);
+    }
+
+    // Update the position of the player
+    public static void UpdatePlayerPosition(GameObject player)
+    {
+        Debug.Log("Updating Player Position");
+
+        Dictionary<string, System.Object> result = new Dictionary<string, System.Object>();
+
+        result["Objects/" + key + "/" + player.name + "/Position"] = player.transform.position.ToString();
+
+        databaseRef.UpdateChildrenAsync(result);
+
+        Debug.Log("Player Position Updated");
+
+        //yield return new WaitForSeconds(2f);
     }
 }

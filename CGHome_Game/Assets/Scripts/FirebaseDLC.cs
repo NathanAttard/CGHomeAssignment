@@ -76,10 +76,12 @@ public class FirebaseDLC : MonoBehaviour
 
         // Set details
         player.name = "Player_" + playerCount;
+        player.tag = "Player" + playerCount;
         player.transform.position = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f));
 
         // Add components
         player.AddComponent<SpriteRenderer>();
+        player.AddComponent<Movement>();
 
         // Update fields in components
         player.GetComponent<SpriteRenderer>().sprite = sprite;
