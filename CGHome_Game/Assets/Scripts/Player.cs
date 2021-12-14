@@ -7,7 +7,7 @@ public class Player
 {
     public string Name;
     public string Shape;
-    public Vector2 Position;
+    public string Position;
     public string CreatedDate;
     public string UniqueID;
 }

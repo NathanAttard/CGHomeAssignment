@@ -75,7 +75,7 @@ public class FirebaseDLC : MonoBehaviour
         GameObject player = new GameObject();
 
         // Set details
-        player.name = "Player " + playerCount;
+        player.name = "Player_" + playerCount;
         player.transform.position = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f));
 
         // Add components
