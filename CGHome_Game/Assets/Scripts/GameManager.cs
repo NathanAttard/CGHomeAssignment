@@ -11,18 +11,28 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_InputField enterGameCode;
     [SerializeField] private TMP_Text p1Name;
     [SerializeField] private TMP_Text p2Name;
+    [SerializeField] private TMP_Text p1Score;
+    [SerializeField] private TMP_Text p2Score;
 
     private void Awake()
     {
-        if (SceneManager.GetActiveScene().name == "Lobby")
+        switch (SceneManager.GetActiveScene().name)
         {
-            gameCode.text = FirebaseController.key;
-            p1Name.text = FirebaseController.player1.Name;
+            case "Lobby":
+                gameCode.text = FirebaseController.key;
+                p1Name.text = FirebaseController.player1.Name;
             
-            if (FirebaseController.player2.Name != "")
-            {
-                p2Name.text = FirebaseController.player2.Name;
-            } 
+                if (FirebaseController.player2.Name != "")
+                {
+                    p2Name.text = FirebaseController.player2.Name;
+                }
+                break;
+            case "Game":
+                p1Score.text = 0.ToString();
+                p2Score.text = 0.ToString();
+                break;
+            default:
+                break;
         }
     }
 

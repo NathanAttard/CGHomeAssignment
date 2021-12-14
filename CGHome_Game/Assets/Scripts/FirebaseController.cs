@@ -95,6 +95,7 @@ public class FirebaseController : MonoBehaviour
 
         result["Objects/" + key + "/" + player.name + "/CreatedDate"] = DateTime.Now.ToString();
         result["Objects/" + key + "/" + player.name + "/Position"] = player.transform.position.ToString();
+        result["Objects/" + key + "/" + player.name + "/Score"] = 0;
 
         string shapeName = player.GetComponent<SpriteRenderer>().sprite.name;
         result["Objects/" + key + "/" + player.name + "/Shape"] = shapeName.Remove(shapeName.Length - 4);
@@ -118,5 +119,19 @@ public class FirebaseController : MonoBehaviour
         databaseRef.UpdateChildrenAsync(result);
 
         Debug.Log("Player Position Updated");
+    }
+
+    // Update the score of the player
+    public static void UpdatePlayerScore(GameObject player, int playerScore)
+    {
+        Debug.Log("Updating Player Score");
+
+        Dictionary<string, System.Object> result = new Dictionary<string, System.Object>();
+
+        result["Objects/" + key + "/" + player.name + "/Score"] = playerScore;
+
+        databaseRef.UpdateChildrenAsync(result);
+
+        Debug.Log("Player Score Updated");
     }
 }

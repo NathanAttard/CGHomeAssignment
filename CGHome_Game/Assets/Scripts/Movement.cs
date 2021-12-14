@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    int p1Counter;
+    int p2Counter;
+
+    int p1Score;
+    int p2Score;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,17 +22,31 @@ public class Movement : MonoBehaviour
         switch (this.tag)
         {
             case "Player1":
-                Keys(KeyCode.A, KeyCode.D, KeyCode.W, KeyCode.S);
+                p1Counter = Move(KeyCode.A, KeyCode.D, KeyCode.W, KeyCode.S, p1Counter);
+                
+                if (p1Counter == 10)
+                {
+                    p1Counter = 0;
+                    p1Score = Score(p1Score);
+                }
+
                 break;
             case "Player2":
-                Keys(KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.UpArrow, KeyCode.DownArrow);
+                p2Counter = Move(KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.UpArrow, KeyCode.DownArrow, p2Counter);
+
+                if (p2Counter == 10)
+                {
+                    p2Counter = 0;
+                    p2Score = Score(p2Score);
+                }
+
                 break;
             default:
                 break;
         }
     }
 
-    void Keys(KeyCode left, KeyCode right, KeyCode up, KeyCode down)
+    int Move(KeyCode left, KeyCode right, KeyCode up, KeyCode down, int counter)
     {
         if (Input.GetKeyDown(left))
         {
@@ -49,6 +69,13 @@ public class Movement : MonoBehaviour
             Vector3 positon = this.transform.position;
             positon.y++;
             this.transform.position = positon;
+
+            Debug.Log("Counter Before: " + counter);
+            counter++;
+            Debug.Log("Counter After: " + counter);
+            Debug.Log("P1 Counter: " + p1Counter);
+            Debug.Log("P2 Counter: " + p2Counter);
+
             FirebaseController.UpdatePlayerPosition(this.gameObject);
         }
 
@@ -57,7 +84,24 @@ public class Movement : MonoBehaviour
             Vector3 positon = this.transform.position;
             positon.y--;
             this.transform.position = positon;
+
+            Debug.Log("Counter Before: " + counter);
+            counter++;
+            Debug.Log("Counter After: " + counter);
+            Debug.Log("P1 Counter: " + p1Counter);
+            Debug.Log("P2 Counter: " + p2Counter);
+
             FirebaseController.UpdatePlayerPosition(this.gameObject);
         }
+
+        return counter;
+    }
+
+    int Score(int scoreCount)
+    {
+        scoreCount++;
+        FirebaseController.UpdatePlayerScore(this.gameObject, scoreCount);
+
+        return scoreCount;
     }
 }

@@ -10,4 +10,5 @@ public class Player
     public string Position;
     public string CreatedDate;
     public string UniqueID;
+    public int Score;
 }
