@@ -118,7 +118,5 @@ public class FirebaseController : MonoBehaviour
         databaseRef.UpdateChildrenAsync(result);
 
         Debug.Log("Player Position Updated");
-
-        //yield return new WaitForSeconds(2f);
     }
 }

@@ -81,10 +81,15 @@ public class FirebaseDLC : MonoBehaviour
 
         // Add components
         player.AddComponent<SpriteRenderer>();
+        player.AddComponent<Rigidbody2D>();
+        player.AddComponent<BoxCollider2D>();
         player.AddComponent<Movement>();
 
         // Update fields in components
         player.GetComponent<SpriteRenderer>().sprite = sprite;
+        player.GetComponent<Rigidbody2D>().gravityScale = 0;
+        player.GetComponent<Rigidbody2D>().freezeRotation = true;
+        player.GetComponent<BoxCollider2D>().size = new Vector2(1.2f, 1.2f);
 
         // Update details in Firebase
         StartCoroutine(FirebaseController.UpdatePlayerDetails(player));

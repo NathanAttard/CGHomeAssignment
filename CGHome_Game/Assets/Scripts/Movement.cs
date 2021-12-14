@@ -33,6 +33,7 @@ public class Movement : MonoBehaviour
             Vector3 positon = this.transform.position;
             positon.x--;
             this.transform.position = positon;
+            FirebaseController.UpdatePlayerPosition(this.gameObject);
         }
 
         if (Input.GetKeyDown(right))
@@ -40,6 +41,7 @@ public class Movement : MonoBehaviour
             Vector3 positon = this.transform.position;
             positon.x++;
             this.transform.position = positon;
+            FirebaseController.UpdatePlayerPosition(this.gameObject);
         }
 
         if (Input.GetKeyDown(up))
@@ -47,6 +49,7 @@ public class Movement : MonoBehaviour
             Vector3 positon = this.transform.position;
             positon.y++;
             this.transform.position = positon;
+            FirebaseController.UpdatePlayerPosition(this.gameObject);
         }
 
         if (Input.GetKeyDown(down))
@@ -54,8 +57,7 @@ public class Movement : MonoBehaviour
             Vector3 positon = this.transform.position;
             positon.y--;
             this.transform.position = positon;
+            FirebaseController.UpdatePlayerPosition(this.gameObject);
         }
-
-        FirebaseController.UpdatePlayerPosition(this.gameObject);
     }
 }
