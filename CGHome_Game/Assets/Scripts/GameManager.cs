@@ -28,8 +28,8 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case "Game":
-                p1Score.text = 0.ToString();
-                p2Score.text = 0.ToString();
+                p1Score.text = FirebaseController.player1.Score.ToString();
+                p2Score.text = FirebaseController.player2.Score.ToString();
                 break;
             default:
                 break;
@@ -45,7 +45,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (SceneManager.GetActiveScene().name == "Game")
+        {
+            UpdateScoreUI();
+        }
     }
 
     public static void LoadScene(string Scene)
@@ -89,5 +92,12 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(FirebaseController.AddSecPlayerToFB());
             }
         }
+    }
+
+    // Update the score in the Game scene
+    public void UpdateScoreUI()
+    {
+        p1Score.text = FirebaseController.player1.Score.ToString();
+        p2Score.text = FirebaseController.player2.Score.ToString();
     }
 }

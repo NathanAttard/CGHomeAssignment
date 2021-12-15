@@ -100,7 +100,7 @@ public class Movement : MonoBehaviour
     int Score(int scoreCount)
     {
         scoreCount++;
-        FirebaseController.UpdatePlayerScore(this.gameObject, scoreCount);
+        FirebaseController.UpdatePlayerScoreToFB(this.gameObject, scoreCount);
 
         return scoreCount;
     }

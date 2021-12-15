@@ -122,7 +122,7 @@ public class FirebaseController : MonoBehaviour
     }
 
     // Update the score of the player
-    public static void UpdatePlayerScore(GameObject player, int playerScore)
+    public static void UpdatePlayerScoreToFB(GameObject player, int playerScore)
     {
         Debug.Log("Updating Player Score");
 
@@ -131,7 +131,39 @@ public class FirebaseController : MonoBehaviour
         result["Objects/" + key + "/" + player.name + "/Score"] = playerScore;
 
         databaseRef.UpdateChildrenAsync(result);
+        databaseRef.Child("Objects").Child(key).ValueChanged += HandleScoreChanged;
 
         Debug.Log("Player Score Updated");
+    }
+
+    public static void HandleScoreChanged(object sender, ValueChangedEventArgs args)
+    {
+        if (args.DatabaseError != null)
+        {
+            Debug.LogError(args.DatabaseError.Message);
+            return;
+        }
+        else
+        {
+            Debug.Log("Score Changed");
+            Dictionary<string, System.Object> result = new Dictionary<string, System.Object>();
+
+            foreach (var player in args.Snapshot.Children)
+            {
+                switch (player.Key)
+                {
+                    case "Player_1":
+                        player1.Score = Int32.Parse(player.Child("Score").Value.ToString());
+                        break;
+                    case "Player_2":
+                        player2.Score = Int32.Parse(player.Child("Score").Value.ToString());
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            Debug.Log("Score Updated");
+        }
     }
 }
