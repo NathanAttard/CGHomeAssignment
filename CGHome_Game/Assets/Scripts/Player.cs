@@ -11,4 +11,5 @@ public class Player
     public string CreatedDate;
     public string UniqueID;
     public int Score;
+    public bool InLobby;
 }

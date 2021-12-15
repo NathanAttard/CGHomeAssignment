@@ -33,7 +33,6 @@ public class GameManager : MonoBehaviour
                 p2Score.text = FirebaseController.player2.Score.ToString();
                 break;
             case "Winner":
-                //Debug.Log("Winner: " + FirebaseController.winner);
                 winner.text = FirebaseController.winner;
                 break;
             default:
@@ -50,10 +49,18 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SceneManager.GetActiveScene().name == "Game")
+        switch (SceneManager.GetActiveScene().name)
         {
-            UpdateScoreUI();
-            Winner();
+            case "Game":
+                UpdateScoreUI();
+                Winner();
+                break;
+            case "Lobby":
+                //FirebaseController.UpdateLobby();
+                //UpdateLobbyUI();
+                break;
+            default:
+                break;
         }        
     }
 
@@ -77,7 +84,7 @@ public class GameManager : MonoBehaviour
         if (playerName.text !=  "")
         {
             // Store player 2's name
-            StartCoroutine(FirebaseController.AddSecPlayerToFB(playerName.text));
+            FirebaseController.player2.Name = playerName.text;
 
             // Redirect user to Join scene
             LoadScene("Join");
@@ -95,8 +102,19 @@ public class GameManager : MonoBehaviour
             // If the key is valid, save data to firebase and redirect user to Lobby
             if (FirebaseController.isKeyCorrect == true)
             {
-                LoadScene("Lobby");
+                StartCoroutine(FirebaseController.AddSecPlayerToFB(enterGameCode.text));
             }
+        }
+    }
+
+    // Update the lobby
+    public void UpdateLobbyUI()
+    {
+        if (FirebaseController.player1.Name != "" && FirebaseController.player2.Name != "" && FirebaseController.key != "")
+        {
+            gameCode.text = FirebaseController.key;
+            p1Name.text = FirebaseController.player1.Name;
+            p2Name.text = FirebaseController.player2.Name;
         }
     }
 

@@ -28,7 +28,7 @@ public class FirebaseController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //UpdateLobby();
     }
 
     public static IEnumerator CreateGameFB(string p1Name)
@@ -38,6 +38,7 @@ public class FirebaseController : MonoBehaviour
 
         // Set player 1 name to the inputted value and convert it to Json
         player1.Name = p1Name;
+        player1.InLobby = true;
         string p1Json = JsonUtility.ToJson(player1);
 
         // Upload the data to the database
@@ -51,45 +52,32 @@ public class FirebaseController : MonoBehaviour
         GameManager.LoadScene("Lobby");
     }
 
-    public static void HandlePlayerChanged(object sender, ValueChangedEventArgs args)
-    {
-        if (args.DatabaseError != null)
-        {
-            Debug.LogError(args.DatabaseError.Message);
-            return;
-        }
-        else
-        {
-            Debug.Log("Player 2 Joining");
+    //public static void HandlePlayerChanged(object sender, ValueChangedEventArgs args)
+    //{
+    //    if (args.DatabaseError != null)
+    //    {
+    //        Debug.LogError(args.DatabaseError.Message);
+    //        return;
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("Player 2 Joining");
 
-            foreach (var player in args.Snapshot.Children)
-            { 
-                if (player.Key == "Player_2")
-                {
-                    player2.Name = player.Value.ToString();
-                }
-            }
+    //        foreach (var player in args.Snapshot.Children)
+    //        {
+    //            if (player.Key == "Player_1")
+    //            {
+    //                player1.Name = player.Value.ToString();
+    //            }
+    //            else if (player.Key == "Player_2")
+    //            {
+    //                player2.Name = player.Value.ToString();
+    //            }
+    //        }
 
-            Debug.Log("Player 2 Joined");
-        }
-    }
-
-    public static IEnumerator AddSecPlayerToFB(string p2Name)
-    {
-        // Set player 2 name to the inputted value and convert it to Json
-        player2.Name = p2Name;
-        string p2Json = JsonUtility.ToJson(player2);
-
-        // Upload the data to the database
-        yield return databaseRef.Child("Objects").Child(key).Child("Player_2").SetRawJsonValueAsync(p2Json);
-
-        //databaseRef.Child("Objects").Child(key).ValueChanged += HandlePlayerChanged;
-
-        Debug.Log("Player 2 was successfully added to Firebase");
-
-        // Redirect user to the Lobby scene
-        GameManager.LoadScene("Join");
-    }
+    //        Debug.Log("Player 2 Joined");
+    //    }
+    //}
 
     public static IEnumerator CheckKey(string key)
     {
@@ -113,6 +101,39 @@ public class FirebaseController : MonoBehaviour
             }
         });
     }
+
+    public static IEnumerator AddSecPlayerToFB(string key)
+    {
+        // Set player 2 name to the inputted value and convert it to Json
+        player2.InLobby = true;
+        string p2Json = JsonUtility.ToJson(player2);
+
+        // Upload the data to the database
+        yield return databaseRef.Child("Objects").Child(key).Child("Player_2").SetRawJsonValueAsync(p2Json);
+
+        //databaseRef.Child("Objects").Child(key).ValueChanged += HandlePlayerChanged;
+
+        Debug.Log("Player 2 was successfully added to Firebase");
+
+        // Redirect user to the Lobby scene
+        GameManager.LoadScene("Lobby");
+    }
+
+    //public static void UpdateLobby()
+    //{
+    //    Dictionary<string, System.Object> result = new Dictionary<string, System.Object>();
+
+    //    player1.InLobby = (bool)result["Objects/" + key + "/Player_1/InLobby"];
+    //    player2.InLobby = (bool)result["Objects/" + key + "/Player_2/InLobby"];
+
+    //    if (player1.InLobby == true && player2.InLobby == true)
+    //    {
+    //        Debug.Log("PLAYERS ARE IN LOBBY");
+            
+    //        player1.Name = result["Objects/" + key + "/Player_1/Name"].ToString();
+    //        player2.Name = result["Objects/" + key + "/Player_2/Name"].ToString();
+    //    }
+    //}
 
     // Update the fields for a particular player
     public static IEnumerator UpdatePlayerDetails(GameObject player)
