@@ -43,10 +43,52 @@ public class FirebaseController : MonoBehaviour
         // Upload the data to the database
         yield return databaseRef.Child("Objects").Child(key).Child("Player_1").SetRawJsonValueAsync(p1Json);
 
+        //databaseRef.Child("Objects").Child(key).ValueChanged += HandlePlayerChanged;
+
         Debug.Log("Player 1 was successfully added to Firebase");
 
         // Redirect user to the Lobby scene
         GameManager.LoadScene("Lobby");
+    }
+
+    public static void HandlePlayerChanged(object sender, ValueChangedEventArgs args)
+    {
+        if (args.DatabaseError != null)
+        {
+            Debug.LogError(args.DatabaseError.Message);
+            return;
+        }
+        else
+        {
+            Debug.Log("Player 2 Joining");
+
+            foreach (var player in args.Snapshot.Children)
+            { 
+                if (player.Key == "Player_2")
+                {
+                    player2.Name = player.Value.ToString();
+                }
+            }
+
+            Debug.Log("Player 2 Joined");
+        }
+    }
+
+    public static IEnumerator AddSecPlayerToFB(string p2Name)
+    {
+        // Set player 2 name to the inputted value and convert it to Json
+        player2.Name = p2Name;
+        string p2Json = JsonUtility.ToJson(player2);
+
+        // Upload the data to the database
+        yield return databaseRef.Child("Objects").Child(key).Child("Player_2").SetRawJsonValueAsync(p2Json);
+
+        //databaseRef.Child("Objects").Child(key).ValueChanged += HandlePlayerChanged;
+
+        Debug.Log("Player 2 was successfully added to Firebase");
+
+        // Redirect user to the Lobby scene
+        GameManager.LoadScene("Join");
     }
 
     public static IEnumerator CheckKey(string key)
@@ -72,19 +114,6 @@ public class FirebaseController : MonoBehaviour
         });
     }
 
-    public static IEnumerator AddSecPlayerToFB()
-    {
-        // Set player 2 name to the inputted value and convert it to Json
-        string p2Json = JsonUtility.ToJson(player2);
-
-        // Upload the data to the database
-        yield return databaseRef.Child("Objects").Child(key).Child("Player_2").SetRawJsonValueAsync(p2Json);
-
-        Debug.Log("Player 2 was successfully added to Firebase");
-
-        GameManager.LoadScene("Lobby");
-    }
-
     // Update the fields for a particular player
     public static IEnumerator UpdatePlayerDetails(GameObject player)
     {
@@ -95,6 +124,7 @@ public class FirebaseController : MonoBehaviour
         result["Objects/" + key + "/" + player.name + "/CreatedDate"] = DateTime.Now.ToString();
         result["Objects/" + key + "/" + player.name + "/Position"] = player.transform.position.ToString();
         result["Objects/" + key + "/" + player.name + "/Score"] = 0;
+        result["Objects/" + key + "/" + player.name + "/UniqueID"] = key;
 
         string shapeName = player.GetComponent<SpriteRenderer>().sprite.name;
         result["Objects/" + key + "/" + player.name + "/Shape"] = shapeName.Remove(shapeName.Length - 4);

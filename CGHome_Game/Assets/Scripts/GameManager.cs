@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
         if (playerName.text !=  "")
         {
             // Store player 2's name
-            FirebaseController.player2.Name = playerName.text;
+            StartCoroutine(FirebaseController.AddSecPlayerToFB(playerName.text));
 
             // Redirect user to Join scene
             LoadScene("Join");
@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour
             // If the key is valid, save data to firebase and redirect user to Lobby
             if (FirebaseController.isKeyCorrect == true)
             {
-                StartCoroutine(FirebaseController.AddSecPlayerToFB());
+                LoadScene("Lobby");
             }
         }
     }
@@ -112,7 +112,6 @@ public class GameManager : MonoBehaviour
     {
         if (FirebaseController.winner != "")
         {
-            //Debug.Log("Winner: " + FirebaseController.winner);
             LoadScene("Winner");
         }
     }

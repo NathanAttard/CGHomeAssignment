@@ -1057,7 +1057,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: {fileID: 1824550872}
   gameCode: {fileID: 0}
+  enterGameCode: {fileID: 0}
   p1Name: {fileID: 0}
+  p2Name: {fileID: 0}
+  p1Score: {fileID: 0}
+  p2Score: {fileID: 0}
+  winner: {fileID: 0}
 --- !u!4 &1073189347
 Transform:
   m_ObjectHideFlags: 0
