@@ -27,7 +27,8 @@ public class Movement : MonoBehaviour
                 if (p1Counter == 10)
                 {
                     p1Counter = 0;
-                    p1Score = Score(p1Score);
+                    p1Score++;
+                    Score(p1Score);
                 }
 
                 break;
@@ -37,7 +38,8 @@ public class Movement : MonoBehaviour
                 if (p2Counter == 10)
                 {
                     p2Counter = 0;
-                    p2Score = Score(p2Score);
+                    p2Score++;
+                    Score(p2Score);
                 }
 
                 break;
@@ -75,6 +77,8 @@ public class Movement : MonoBehaviour
             Debug.Log("Counter After: " + counter);
             Debug.Log("P1 Counter: " + p1Counter);
             Debug.Log("P2 Counter: " + p2Counter);
+            Debug.Log("P1 Score: " + FirebaseController.player1.Score);
+            Debug.Log("P2 Score: " + FirebaseController.player2.Score);
 
             FirebaseController.UpdatePlayerPosition(this.gameObject);
         }
@@ -90,6 +94,8 @@ public class Movement : MonoBehaviour
             Debug.Log("Counter After: " + counter);
             Debug.Log("P1 Counter: " + p1Counter);
             Debug.Log("P2 Counter: " + p2Counter);
+            Debug.Log("P1 Score: " + FirebaseController.player1.Score);
+            Debug.Log("P2 Score: " + FirebaseController.player2.Score);
 
             FirebaseController.UpdatePlayerPosition(this.gameObject);
         }
@@ -97,11 +103,8 @@ public class Movement : MonoBehaviour
         return counter;
     }
 
-    int Score(int scoreCount)
+    void Score(int scoreCount)
     {
-        scoreCount++;
         FirebaseController.UpdatePlayerScoreToFB(this.gameObject, scoreCount);
-
-        return scoreCount;
     }
 }

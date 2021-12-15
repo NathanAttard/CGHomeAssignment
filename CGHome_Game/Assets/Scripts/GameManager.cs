@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text p2Name;
     [SerializeField] private TMP_Text p1Score;
     [SerializeField] private TMP_Text p2Score;
+    [SerializeField] private TMP_Text winner;
 
     private void Awake()
     {
@@ -31,6 +32,10 @@ public class GameManager : MonoBehaviour
                 p1Score.text = FirebaseController.player1.Score.ToString();
                 p2Score.text = FirebaseController.player2.Score.ToString();
                 break;
+            case "Winner":
+                //Debug.Log("Winner: " + FirebaseController.winner);
+                winner.text = FirebaseController.winner;
+                break;
             default:
                 break;
         }
@@ -48,7 +53,8 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Game")
         {
             UpdateScoreUI();
-        }
+            Winner();
+        }        
     }
 
     public static void LoadScene(string Scene)
@@ -99,5 +105,25 @@ public class GameManager : MonoBehaviour
     {
         p1Score.text = FirebaseController.player1.Score.ToString();
         p2Score.text = FirebaseController.player2.Score.ToString();
+    }
+
+    // Check for winner
+    public void Winner()
+    {
+        if (FirebaseController.winner != "")
+        {
+            //Debug.Log("Winner: " + FirebaseController.winner);
+            LoadScene("Winner");
+        }
+    }
+
+    // Quit
+    public void QuitGame()
+    {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
     }
 }

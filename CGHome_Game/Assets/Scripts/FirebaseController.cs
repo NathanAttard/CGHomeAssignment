@@ -7,8 +7,10 @@ using System;
 public class FirebaseController : MonoBehaviour
 {
     public static string key;
-    public static Player player1;
-    public static Player player2;
+    public static Player player1 = new Player();
+    public static Player player2 = new Player();
+
+    public static string winner = "";
 
     public static bool isKeyCorrect;
 
@@ -21,9 +23,6 @@ public class FirebaseController : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
 
         databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
-
-        player1 = new Player();
-        player2 = new Player();
     }
 
     // Update is called once per frame
@@ -134,8 +133,11 @@ public class FirebaseController : MonoBehaviour
         databaseRef.Child("Objects").Child(key).ValueChanged += HandleScoreChanged;
 
         Debug.Log("Player Score Updated");
+
+        CheckWinner();
     }
 
+    // Update the Score UI
     public static void HandleScoreChanged(object sender, ValueChangedEventArgs args)
     {
         if (args.DatabaseError != null)
@@ -164,6 +166,18 @@ public class FirebaseController : MonoBehaviour
             }
 
             Debug.Log("Score Updated");
+        }
+    }
+
+    public static void CheckWinner()
+    {
+        if (player1.Score == 10)
+        {
+            winner = player1.Name;
+        }
+        else if(player2.Score == 10)
+        {
+            winner = player2.Name;
         }
     }
 }
