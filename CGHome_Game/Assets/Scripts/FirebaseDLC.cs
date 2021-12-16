@@ -68,9 +68,6 @@ public class FirebaseDLC : MonoBehaviour
     // Create the player
     private void CreatePlayer(Sprite sprite)
     {
-        Debug.Log("Sprite Name: " + sprite.name);
-        Debug.Log("PLayerNo: " + playerNo);
-
         // Check the sprite name to set the player accordingly
         if (sprite.name == "Circle.png")
         {

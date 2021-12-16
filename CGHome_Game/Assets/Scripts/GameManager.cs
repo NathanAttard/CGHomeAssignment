@@ -51,12 +51,13 @@ public class GameManager : MonoBehaviour
     {
         switch (SceneManager.GetActiveScene().name)
         {
-            case "Game":
-                UpdateScoreUI();
-                Winner();
-                break;
             case "Lobby":
                 UpdateLobbyUI();
+                break;
+            case "Game":
+                FirebaseController.CheckOpponentPosition();
+                UpdateScoreUI();
+                Winner();
                 break;
             default:
                 break;
