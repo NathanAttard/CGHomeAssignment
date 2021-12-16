@@ -6,7 +6,7 @@ using Firebase.Extensions;
 
 public class FirebaseDLC : MonoBehaviour
 {
-    int playerCount;
+    int playerNo = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -68,16 +68,34 @@ public class FirebaseDLC : MonoBehaviour
     // Create the player
     private void CreatePlayer(Sprite sprite)
     {
-        // Increase the number of players
-        playerCount++;
+        Debug.Log("Sprite Name: " + sprite.name);
+        Debug.Log("PLayerNo: " + playerNo);
+
+        // Check the sprite name to set the player accordingly
+        if (sprite.name == "Circle.png")
+        {
+            playerNo = 1;
+        }
+        else if (sprite.name == "Square.png")
+        {
+            playerNo = 2;
+        }
 
         // Create an empty GameObject
         GameObject player = new GameObject();
 
         // Set details
-        player.name = "Player_" + playerCount;
-        player.tag = "Player" + playerCount;
-        player.transform.position = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f));
+        player.name = "Player_" + playerNo;
+        player.tag = "Player" + playerNo;
+
+        if (player.tag == "Player1")
+        {
+            player.transform.position = new Vector2(-2f, 0f);
+        }
+        else if (player.tag == "Player2")
+        {
+            player.transform.position = new Vector2(2f, 0f);
+        }
 
         // Add components
         player.AddComponent<SpriteRenderer>();

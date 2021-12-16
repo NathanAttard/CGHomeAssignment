@@ -56,8 +56,7 @@ public class GameManager : MonoBehaviour
                 Winner();
                 break;
             case "Lobby":
-                //FirebaseController.UpdateLobby();
-                //UpdateLobbyUI();
+                UpdateLobbyUI();
                 break;
             default:
                 break;
@@ -104,6 +103,8 @@ public class GameManager : MonoBehaviour
             {
                 StartCoroutine(FirebaseController.AddSecPlayerToFB(enterGameCode.text));
             }
+
+           FirebaseController.key = enterGameCode.text;
         }
     }
 
@@ -114,6 +115,15 @@ public class GameManager : MonoBehaviour
         {
             gameCode.text = FirebaseController.key;
             p1Name.text = FirebaseController.player1.Name;
+            p2Name.text = FirebaseController.player2.Name;
+        }
+
+        if (p1Name.text == "")
+        {
+            p1Name.text = FirebaseController.player1.Name;
+        }
+        else if (p2Name.text == "")
+        {
             p2Name.text = FirebaseController.player2.Name;
         }
     }
